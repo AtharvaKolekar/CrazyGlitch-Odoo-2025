@@ -4,6 +4,19 @@ A minimal, transparent swap system for ReWear – enabling peer-to-peer clothing
 
 ---
 
+## 👥 Team
+
+**Team Name**: Team 1556 / Crazy Gitch  
+**Team Leader**: Vansh Manish Agarwal  
+**Reviewer**: Haja Ram (ramh)
+
+**Team Members**:
+- Jiya Singh
+- Atharva Kolekar
+- Deep Bhansode
+
+---
+
 ## 🚀 Features
 
 - **Swap Request Flow** – Propose direct swaps between users.
