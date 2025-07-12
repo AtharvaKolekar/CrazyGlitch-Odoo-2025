@@ -92,7 +92,7 @@ export default function SignupPage() {
           title: "Welcome to ReWear!",
           description: "Your account has been created successfully. You've earned 50 welcome points!",
         })
-        router.push("/dashboard")
+        router.push("/kyc")
       } else {
         setErrors({ email: "An account with this email already exists" })
       }
