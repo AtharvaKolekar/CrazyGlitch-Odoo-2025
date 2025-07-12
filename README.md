@@ -25,8 +25,7 @@ A minimal, transparent swap system for ReWear – enabling peer-to-peer clothing
 | Backend     | Node.js/Express or Flask     |
 | AI Matching | CLIP / ResNet for embeddings |
 | Database    | PostgreSQL                   |
-| Auth        | Auth0 / Firebase             |
-| Storage     | AWS S3 (images)              |
+| Auth        |  Firebase                    |
 | Realtime    | WebSockets (Pusher/socket.io)|
 
 ---
