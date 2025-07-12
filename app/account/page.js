@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { User, ShoppingBasket, Upload, Grid, Star, MapPin, Plus, Edit, Trash2, Heart } from 'lucide-react';
 
