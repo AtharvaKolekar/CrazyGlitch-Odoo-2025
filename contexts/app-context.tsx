@@ -1,127 +1,143 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { createContext, useContext, useState } from "react"
+import type React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useUser } from "@/lib/auth";
+import { getDatabase, ref, get } from "firebase/database"
 
 interface User {
-  id: string
-  username: string
-  email: string
-  avatar: string
-  bio: string
-  points: number
+  id: string;
+  username: string;
+  email: string;
+  avatar: string;
+  bio: string;
+  points: number;
   location: {
-    city: string
-    state: string
-    country: string
-  }
+    city: string;
+    state: string;
+    country: string;
+  };
   trustMetrics: {
-    swapSuccessRate: number
-    totalSwaps: number
-    rating: number
-  }
-  isAdmin?: boolean
-  isNGO?: boolean
+    swapSuccessRate: number;
+    totalSwaps: number;
+    rating: number;
+  };
+  isAdmin?: boolean;
+  isNGO?: boolean;
 }
 
 interface ProductSpecifications {
-  brand?: string
-  material?: string
-  color: string
-  pattern?: string
-  sleeve?: string
-  neckline?: string
-  fit?: string
-  occasion?: string
-  season?: string
-  careInstructions?: string
+  brand?: string;
+  material?: string;
+  color: string;
+  pattern?: string;
+  sleeve?: string;
+  neckline?: string;
+  fit?: string;
+  occasion?: string;
+  season?: string;
+  careInstructions?: string;
 }
 
 interface Item {
-  id: string
-  title: string
-  description: string
-  category: string
-  type: string
-  size: string
-  condition: string
-  tags: string[]
-  images: string[]
-  specifications: ProductSpecifications
-  uploaderId: string
-  uploaderName: string
-  uploaderAvatar: string
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  type: string;
+  size: string;
+  condition: string;
+  tags: string[];
+  images: string[];
+  specifications: ProductSpecifications;
+  uploaderId: string;
+  uploaderName: string;
+  uploaderAvatar: string;
   uploaderLocation: {
-    city: string
-    state: string
-  }
-  pointsCost: number
-  status: "available" | "reserved" | "swapped" | "pending"
-  createdAt: string
-  isNGODonation?: boolean
+    city: string;
+    state: string;
+  };
+  pointsCost: number;
+  status: "available" | "reserved" | "swapped" | "pending";
+  createdAt: string;
+  isNGODonation?: boolean;
 }
 
 interface SwapRequest {
-  id: string
-  requesterId: string
-  requesterName: string
-  requesterAvatar: string
-  targetItemId: string
-  targetItemTitle: string
-  offeredItems: string[]
-  offeredItemTitles: string[]
-  pointsDifference: number
-  message: string
-  status: "proposed" | "accepted" | "rejected" | "shipped" | "delivered" | "completed"
-  createdAt: string
-  updatedAt: string
-  chatMessages: ChatMessage[]
+  id: string;
+  requesterId: string;
+  requesterName: string;
+  requesterAvatar: string;
+  targetItemId: string;
+  targetItemTitle: string;
+  offeredItems: string[];
+  offeredItemTitles: string[];
+  pointsDifference: number;
+  message: string;
+  status:
+    | "proposed"
+    | "accepted"
+    | "rejected"
+    | "shipped"
+    | "delivered"
+    | "completed";
+  createdAt: string;
+  updatedAt: string;
+  chatMessages: ChatMessage[];
   shippingDetails?: {
-    requesterAddress?: string
-    targetUserAddress?: string
-    trackingNumber?: string
-  }
+    requesterAddress?: string;
+    targetUserAddress?: string;
+    trackingNumber?: string;
+  };
 }
 
 interface ChatMessage {
-  id: string
-  senderId: string
-  senderName: string
-  message: string
-  timestamp: string
-  type: "text" | "system"
+  id: string;
+  senderId: string;
+  senderName: string;
+  message: string;
+  timestamp: string;
+  type: "text" | "system";
 }
 
 interface BasketItem extends Item {
-  quantity: number
+  quantity: number;
 }
 
 interface CategoryPoints {
-  [key: string]: number
+  [key: string]: number;
 }
 
 interface AppContextType {
-  user: User | null
-  setUser: (user: User | null) => void
-  items: Item[]
-  basketItems: BasketItem[]
-  swapRequests: SwapRequest[]
-  categoryPoints: CategoryPoints
-  addToBasket: (item: Item) => void
-  removeFromBasket: (itemId: string) => void
-  clearBasket: () => void
-  isAuthenticated: boolean
-  login: (email: string, password: string) => Promise<boolean>
-  logout: () => void
-  signup: (email: string, password: string, username: string) => Promise<boolean>
-  createSwapRequest: (targetItemId: string, offeredItems: string[], message: string) => void
-  updateSwapRequestStatus: (requestId: string, status: string) => void
-  sendChatMessage: (requestId: string, message: string) => void
-  updateCategoryPoints: (category: string, points: number) => void
-  createRedeemRequest: (itemId: string) => void
+  user: User | null;
+  setUser: (user: User | null) => void;
+  items: Item[];
+  basketItems: BasketItem[];
+  swapRequests: SwapRequest[];
+  categoryPoints: CategoryPoints;
+  addToBasket: (item: Item) => void;
+  removeFromBasket: (itemId: string) => void;
+  clearBasket: () => void;
+  isAuthenticated: boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  logout: () => void;
+  signup: (
+    email: string,
+    password: string,
+    username: string
+  ) => Promise<boolean>;
+  createSwapRequest: (
+    targetItemId: string,
+    offeredItems: string[],
+    message: string
+  ) => void;
+  updateSwapRequestStatus: (requestId: string, status: string) => void;
+  sendChatMessage: (requestId: string, message: string) => void;
+  updateCategoryPoints: (category: string, points: number) => void;
+  createRedeemRequest: (itemId: string) => void;
 }
 
-const AppContext = createContext<AppContextType | undefined>(undefined)
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
 // Mock data with enhanced specifications
 const mockCategoryPoints: CategoryPoints = {
@@ -135,7 +151,7 @@ const mockCategoryPoints: CategoryPoints = {
   Outerwear: 350,
   Shoes: 200,
   Accessories: 100,
-}
+};
 
 const mockItems: Item[] = [
   {
@@ -148,7 +164,10 @@ const mockItems: Item[] = [
     size: "M",
     condition: "Excellent",
     tags: ["vintage", "denim", "casual", "blue"],
-    images: ["/placeholder.svg?height=400&width=400", "/placeholder.svg?height=400&width=400"],
+    images: [
+      "/placeholder.svg?height=400&width=400",
+      "/placeholder.svg?height=400&width=400",
+    ],
     specifications: {
       brand: "Levi's",
       material: "100% Cotton Denim",
@@ -201,7 +220,8 @@ const mockItems: Item[] = [
   {
     id: "3",
     title: "Designer Cotton Shirt",
-    description: "Premium cotton shirt from a luxury brand. Perfect for office wear and formal occasions.",
+    description:
+      "Premium cotton shirt from a luxury brand. Perfect for office wear and formal occasions.",
     category: "Shirts",
     type: "Formal Shirt",
     size: "L",
@@ -231,7 +251,8 @@ const mockItems: Item[] = [
   {
     id: "4",
     title: "Casual Cotton T-Shirt",
-    description: "Comfortable cotton t-shirt in navy blue. Perfect for everyday wear.",
+    description:
+      "Comfortable cotton t-shirt in navy blue. Perfect for everyday wear.",
     category: "T-Shirts",
     type: "Casual T-Shirt",
     size: "M",
@@ -261,7 +282,8 @@ const mockItems: Item[] = [
   {
     id: "5",
     title: "Kids Rainbow Dress",
-    description: "Colorful rainbow dress for kids. Perfect for parties and special occasions.",
+    description:
+      "Colorful rainbow dress for kids. Perfect for parties and special occasions.",
     category: "Kidswear",
     type: "Party Dress",
     size: "4-5 Years",
@@ -288,7 +310,7 @@ const mockItems: Item[] = [
     createdAt: "2024-01-11",
     isNGODonation: true,
   },
-]
+];
 
 const mockUser: User = {
   id: "user1",
@@ -308,48 +330,106 @@ const mockUser: User = {
     rating: 4.8,
   },
   isAdmin: true,
-}
+};
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [items] = useState<Item[]>(mockItems)
-  const [basketItems, setBasketItems] = useState<BasketItem[]>([])
-  const [swapRequests, setSwapRequests] = useState<SwapRequest[]>([])
-  const [categoryPoints, setCategoryPoints] = useState<CategoryPoints>(mockCategoryPoints)
+  const [user, setUser] = useState<User | null>(null);
+  const [items] = useState<Item[]>(mockItems);
+  const [basketItems, setBasketItems] = useState<BasketItem[]>([]);
+  const [swapRequests, setSwapRequests] = useState<SwapRequest[]>([]);
+  const [categoryPoints, setCategoryPoints] =
+    useState<CategoryPoints>(mockCategoryPoints);
+  const fbUser: any = useUser();
+
+ const [realUser, setRealUser] = useState<User | null>(null)
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    if (!fbUser?.user?.uid) return
+
+    const db = getDatabase()
+    const userRef = ref(db, `/UserData/${fbUser.user.uid}`)
+    const snapshot = await get(userRef)
+
+    if (snapshot.exists()) {
+      const data = snapshot.val()
+
+      const userFromDb: User = {
+        id: "tdhgj",
+        username: data.name || "Unknown",
+        email: data.email || "",
+        avatar: "/placeholder.svg?height=40&width=40", // Add real avatar if available
+        bio: "Sustainable fashion enthusiast", // Add from DB if stored
+        points: data.points || 100, // Add from DB if stored
+        location: {
+          city: data.personalInfo?.city || "",
+          state: data.personalInfo?.state || "",
+          country: data.personalInfo?.country || "",
+        },
+        trustMetrics: {
+          swapSuccessRate: 95, // Replace with DB value if available
+          totalSwaps: 12,
+          rating: 4.8,
+        },
+        isAdmin: data?.isAdmin || false,
+      }
+
+      setRealUser(userFromDb)
+    } else {
+      console.log("No data found for this user")
+    }
+  }
+
+  fetchUserData()
+}, [fbUser])
+
+
+useEffect(() => {
+  if (fbUser && realUser) {
+    setUser(realUser)
+  }
+}, [fbUser, realUser])
+
 
   const addToBasket = (item: Item) => {
     setBasketItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id)
+      const existing = prev.find((i) => i.id === item.id);
       if (existing) {
-        return prev.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i))
+        return prev.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
       }
-      return [...prev, { ...item, quantity: 1 }]
-    })
-  }
+      return [...prev, { ...item, quantity: 1 }];
+    });
+  };
 
   const removeFromBasket = (itemId: string) => {
-    setBasketItems((prev) => prev.filter((item) => item.id !== itemId))
-  }
+    setBasketItems((prev) => prev.filter((item) => item.id !== itemId));
+  };
 
   const clearBasket = () => {
-    setBasketItems([])
-  }
+    setBasketItems([]);
+  };
 
   const login = async (email: string, password: string): Promise<boolean> => {
     if (email && password) {
-      setUser(mockUser)
-      return true
+      setUser(mockUser);
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const logout = () => {
-    setUser(null)
-    clearBasket()
-    setSwapRequests([])
-  }
+    setUser(null);
+    clearBasket();
+    setSwapRequests([]);
+  };
 
-  const signup = async (email: string, password: string, username: string): Promise<boolean> => {
+  const signup = async (
+    email: string,
+    password: string,
+    username: string
+  ): Promise<boolean> => {
     if (email && password && username) {
       const newUser: User = {
         id: `user_${Date.now()}`,
@@ -368,23 +448,32 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           totalSwaps: 0,
           rating: 0,
         },
-      }
-      setUser(newUser)
-      return true
+      };
+      setUser(newUser);
+      return true;
     }
-    return false
-  }
+    return false;
+  };
 
-  const createSwapRequest = (targetItemId: string, offeredItems: string[], message: string) => {
-    if (!user) return
+  const createSwapRequest = (
+    targetItemId: string,
+    offeredItems: string[],
+    message: string
+  ) => {
+    if (!user) return;
 
-    const targetItem = items.find((item) => item.id === targetItemId)
-    const offeredItemDetails = items.filter((item) => offeredItems.includes(item.id))
+    const targetItem = items.find((item) => item.id === targetItemId);
+    const offeredItemDetails = items.filter((item) =>
+      offeredItems.includes(item.id)
+    );
 
-    if (!targetItem) return
+    if (!targetItem) return;
 
-    const offeredPointsValue = offeredItemDetails.reduce((sum, item) => sum + item.pointsCost, 0)
-    const pointsDifference = targetItem.pointsCost - offeredPointsValue
+    const offeredPointsValue = offeredItemDetails.reduce(
+      (sum, item) => sum + item.pointsCost,
+      0
+    );
+    const pointsDifference = targetItem.pointsCost - offeredPointsValue;
 
     const newRequest: SwapRequest = {
       id: `swap_${Date.now()}`,
@@ -410,21 +499,27 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           type: "text",
         },
       ],
-    }
+    };
 
-    setSwapRequests((prev) => [...prev, newRequest])
-  }
+    setSwapRequests((prev) => [...prev, newRequest]);
+  };
 
   const updateSwapRequestStatus = (requestId: string, status: string) => {
     setSwapRequests((prev) =>
       prev.map((request) =>
-        request.id === requestId ? { ...request, status: status as any, updatedAt: new Date().toISOString() } : request,
-      ),
-    )
-  }
+        request.id === requestId
+          ? {
+              ...request,
+              status: status as any,
+              updatedAt: new Date().toISOString(),
+            }
+          : request
+      )
+    );
+  };
 
   const sendChatMessage = (requestId: string, message: string) => {
-    if (!user) return
+    if (!user) return;
 
     const newMessage: ChatMessage = {
       id: `msg_${Date.now()}`,
@@ -433,7 +528,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       message,
       timestamp: new Date().toISOString(),
       type: "text",
-    }
+    };
 
     setSwapRequests((prev) =>
       prev.map((request) =>
@@ -443,19 +538,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
               chatMessages: [...request.chatMessages, newMessage],
               updatedAt: new Date().toISOString(),
             }
-          : request,
-      ),
-    )
-  }
+          : request
+      )
+    );
+  };
 
   const updateCategoryPoints = (category: string, points: number) => {
-    setCategoryPoints((prev) => ({ ...prev, [category]: points }))
-  }
+    setCategoryPoints((prev) => ({ ...prev, [category]: points }));
+  };
 
   const createRedeemRequest = (itemId: string) => {
     // Mock redeem request - in real app would call API
-    console.log(`Redeem request created for item ${itemId}`)
-  }
+    console.log(`Redeem request created for item ${itemId}`);
+  };
 
   return (
     <AppContext.Provider
@@ -469,7 +564,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         addToBasket,
         removeFromBasket,
         clearBasket,
-        isAuthenticated: !!user,
+        isAuthenticated: !!fbUser,
         login,
         logout,
         signup,
@@ -482,13 +577,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     >
       {children}
     </AppContext.Provider>
-  )
+  );
 }
 
 export function useApp() {
-  const context = useContext(AppContext)
+  const context = useContext(AppContext);
   if (context === undefined) {
-    throw new Error("useApp must be used within an AppProvider")
+    throw new Error("useApp must be used within an AppProvider");
   }
-  return context
+  return context;
 }

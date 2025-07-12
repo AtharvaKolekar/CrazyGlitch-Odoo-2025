@@ -11,10 +11,12 @@ import { Coins, Plus, Package, ArrowUpDown, CheckCircle, Clock, Eye } from "luci
 import { useApp } from "@/contexts/app-context"
 import Link from "next/link"
 import Image from "next/image"
+import { useUser } from "@/lib/auth"
 
 export default function DashboardPage() {
   const { user, isAuthenticated, items } = useApp()
   const router = useRouter()
+  // const user = useUser()
 
   useEffect(() => {
     if (!isAuthenticated) {
