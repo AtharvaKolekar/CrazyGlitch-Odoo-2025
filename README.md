@@ -23,7 +23,6 @@ A minimal, transparent swap system for ReWear – enabling peer-to-peer clothing
 |-------------|------------------------------|
 | Frontend    | React, Tailwind CSS          |
 | Backend     | Node.js/Express or Flask     |
-| AI Matching | CLIP / ResNet for embeddings |
 | Database    | PostgreSQL                   |
 | Auth        |  Firebase                    |
 | Realtime    | WebSockets (Pusher/socket.io)|
