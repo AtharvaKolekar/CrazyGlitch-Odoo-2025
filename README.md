@@ -20,12 +20,11 @@ A minimal, transparent swap system for ReWear – enabling peer-to-peer clothing
 ## 🚀 Features
 
 - **Swap Request Flow** – Propose direct swaps between users.
-- **AI Suggestions** – Recommend best matching items from your closet.
 - **Swap Preview** – View both items, point difference, and user trust scores.
 - **Secure Acceptance** – Addresses shared only after mutual agreement.
 - **In-App Chat** – Negotiate swap terms in real-time.
 - **Shipping Tracker** – Upload tracking, confirm delivery.
-- **Karma & Points Update** – Automatically adjusts after successful swap.
+- **Points Update** – Automatically adjusts after successful swap.
 - **Swap History** – Timeline view of all actions for transparency.
 
 ---
@@ -36,7 +35,7 @@ A minimal, transparent swap system for ReWear – enabling peer-to-peer clothing
 |-------------|------------------------------|
 | Frontend    | React, Tailwind CSS          |
 | Backend     | Node.js/Express or Flask     |
-| Database    | PostgreSQL                   |
+| Database    | Firebase                     |
 | Auth        |  Firebase                    |
 | Realtime    | WebSockets (Pusher/socket.io)|
 
