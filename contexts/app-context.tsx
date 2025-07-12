@@ -164,7 +164,7 @@ const mockItems: Item[] = [
     size: "M",
     condition: "Excellent",
     tags: ["vintage", "denim", "casual", "blue"],
-    images: ["/public/images/1/3ccb4_512.webp?/height=400&width=400", "/public/images/1/i4ksr_512.webp?/height=400&width=400"],
+    images: ["/images/1/3ccb4_512.webp?/height=400&width=400", "/images/1/i4ksr_512.webp?/height=400&width=400"],
     specifications: {
       brand: "Levi's",
       material: "100% Cotton Denim",
@@ -193,7 +193,7 @@ const mockItems: Item[] = [
     size: "S",
     condition: "Good",
     tags: ["floral", "summer", "casual", "cotton"],
-    images: ["/public/images/2/c8zop_512.webp?/height=400&width=400", "/public/images/2/guoa3_512.webp?/height=400&width=400"],
+    images: ["/images/2/c8zop_512.webp?/height=400&width=400", "/images/2/guoa3_512.webp?/height=400&width=400"],
     specifications: {
       brand: "Fabindia",
       material: "100% Cotton",
@@ -224,7 +224,7 @@ const mockItems: Item[] = [
     size: "L",
     condition: "Like New",
     tags: ["designer", "cotton", "formal", "white"],
-    images: ["/public/images/3/sboa0_512.webp?/height=400&width=400", "/public/images/3/ulkyn_512.webp?/height=400&width=400"],
+    images: ["/images/3/sboa0_512.webp?/height=400&width=400", "/images/3/ulkyn_512.webp?/height=400&width=400"],
     specifications: {
       brand: "Van Heusen",
       material: "100% Cotton",
@@ -255,7 +255,7 @@ const mockItems: Item[] = [
     size: "M",
     condition: "Good",
     tags: ["cotton", "casual", "basic", "navy"],
-    images: ["/public/images/4/avtpq_512.webp?height=400&width=400", "/public/images/4/g19fy_512.webp?height=400&width=400"],
+    images: ["/images/4/avtpq_512.webp?height=400&width=400", "/images/4/g19fy_512.webp?height=400&width=400"],
     specifications: {
       brand: "H&M",
       material: "100% Cotton",
@@ -286,7 +286,7 @@ const mockItems: Item[] = [
     size: "4-5 Years",
     condition: "Excellent",
     tags: ["kids", "colorful", "party", "dress"],
-    images: ["/public/images/5/iknq8_512.webp?height=400&width=400", "/public/images/5/1ofp4_512.webp?height=400&width=400"],
+    images: ["/images/5/iknq8_512.webp?height=400&width=400", "/images/5/1ofp4_512.webp?height=400&width=400"],
     specifications: {
       brand: "Mothercare",
       material: "Cotton Blend",
@@ -316,7 +316,7 @@ const mockItems: Item[] = [
     size: "6-7 Years",
     condition: "Good",
     tags: ["kids", "jacket", "denim"],
-    images: ["/public/images/6/jli6w_512.webp?height=400&width=400", "/public/images/6/ziafp_512.webp?height=400&width=400"],
+    images: ["/images/6/jli6w_512.webp?height=400&width=400", "/images/6/ziafp_512.webp?height=400&width=400"],
     specifications: {
       brand: "Zara Kids",
       material: "Denim",
@@ -346,7 +346,7 @@ const mockItems: Item[] = [
     size: "3-4 Years",
     condition: "Very Good",
     tags: ["kids", "pajama", "nightwear"],
-    images: ["/public/images/7/2i869_512.webp?height=400&width=400","/public/images/7/xtimq_512.webp?height=400&width=400"],
+    images: ["/images/7/2i869_512.webp?height=400&width=400","/images/7/xtimq_512.webp?height=400&width=400"],
     specifications: {
       brand: "FirstCry",
       material: "Cotton",
@@ -378,7 +378,7 @@ const mockItems: Item[] = [
     size: "32",
     condition: "Very Good",
     tags: ["jeans", "denim", "blue"],
-    images: ["/public/images/8/lnp2d_512.webp?height=400&width=400","/public/images/8/sjbzw_512.webp.webp?height=400&width=400"],
+    images: ["/images/8/lnp2d_512.webp?height=400&width=400","/images/8/sjbzw_512.webp.webp?height=400&width=400"],
     specifications: {
       brand: "Levi's",
       material: "Denim",
@@ -408,7 +408,7 @@ const mockItems: Item[] = [
     size: "30",
     condition: "Good",
     tags: ["denim", "grey", "distressed"],
-    images: ["/public/images/9/1ctzk_512.webp?height=400&width=400","/public/images/9/wdl41_512.webp?height=400&width=400"],
+    images: ["/images/9/1ctzk_512.webp?height=400&width=400","/images/9/wdl41_512.webp?height=400&width=400"],
     specifications: {
       brand: "Wrangler",
       material: "Denim",
@@ -440,7 +440,7 @@ const mockItems: Item[] = [
     size: "L",
     condition: "Excellent",
     tags: ["shirt", "formal", "white"],
-    images: ["/public/images/10/sfkwy_512.webp?height=400&width=400","/public/images/10/tvzqu_512.webp?height=400&width=400"],
+    images: ["/images/10/sfkwy_512.webp?height=400&width=400","/images/10/tvzqu_512.webp?height=400&width=400"],
     specifications: {
       brand: "Arrow",
       material: "Cotton",
