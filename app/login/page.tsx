@@ -21,6 +21,8 @@ import { useApp } from "@/contexts/app-context"
 import { useToast } from "@/hooks/use-toast"
 import { Eye, EyeOff } from "lucide-react"
 
+import { signIn, useUser, signOut } from "@/lib/auth";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -60,7 +62,7 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const success = await login(email, password)
+      const success = await signIn(email, password)
       if (success) {
         toast({
           title: "Welcome back!",

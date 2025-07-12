@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useApp } from "@/contexts/app-context"
 import { useToast } from "@/hooks/use-toast"
 import { Eye, EyeOff } from "lucide-react"
+import { useUser, signOut, signUp, updateUserProfile, updateUserDatabase } from "@/lib/auth";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -81,7 +82,11 @@ export default function SignupPage() {
     setIsLoading(true)
 
     try {
-      const success = await signup(formData.email, formData.password, formData.username)
+      const success = await signUp(formData.email, formData.password, )
+      const firebaseUser = success.user;
+
+      await updateUserProfile(firebaseUser, { displayName: formData.username });
+      await updateUserDatabase(firebaseUser);
       if (success) {
         toast({
           title: "Welcome to ReWear!",
