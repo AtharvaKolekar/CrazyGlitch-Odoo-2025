@@ -345,50 +345,49 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
 useEffect(() => {
   const fetchUserData = async () => {
-    if (!fbUser?.user?.uid) return
+    if (!fbUser?.user?.uid) return;
 
-    const db = getDatabase()
-    const userRef = ref(db, `/UserData/${fbUser.user.uid}`)
-    const snapshot = await get(userRef)
+    const db = getDatabase();
+    const userRef = ref(db, `/UserData/${fbUser.user.uid}`);
+    const snapshot = await get(userRef);
 
     if (snapshot.exists()) {
-      const data = snapshot.val()
+      const data = snapshot.val();
 
       const userFromDb: User = {
-        id: "tdhgj",
+        id: fbUser.user.uid,
         username: data.name || "Unknown",
         email: data.email || "",
-        avatar: "/placeholder.svg?height=40&width=40", // Add real avatar if available
-        bio: "Sustainable fashion enthusiast", // Add from DB if stored
-        points: data.points || 100, // Add from DB if stored
+        avatar: "/placeholder.svg?height=40&width=40",
+        bio: "Sustainable fashion enthusiast",
+        points: data.points || 100,
         location: {
           city: data.personalInfo?.city || "",
           state: data.personalInfo?.state || "",
           country: data.personalInfo?.country || "",
         },
         trustMetrics: {
-          swapSuccessRate: 95, // Replace with DB value if available
+          swapSuccessRate: 95,
           totalSwaps: 12,
           rating: 4.8,
         },
         isAdmin: data?.isAdmin || false,
       }
 
-      setRealUser(userFromDb)
-    } else {
-      console.log("No data found for this user")
+      setUser(userFromDb); // ✅ set user here, once
     }
   }
 
-  fetchUserData()
-}, [fbUser])
+  fetchUserData();
+}, [fbUser?.user?.uid]);
+
 
 
 useEffect(() => {
   if (fbUser && realUser) {
     setUser(realUser)
   }
-}, [fbUser, realUser])
+}, [fbUser])
 
 
   const addToBasket = (item: Item) => {
