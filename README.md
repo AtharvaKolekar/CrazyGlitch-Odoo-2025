@@ -1,19 +1,39 @@
-🌀 ReWear Swap Page v0
-A minimal, transparent swap flow for ReWear – enabling peer-to-peer clothing exchanges with AI-powered item matching and trust features.
+# 🌀 ReWear Swap Page v0
 
-🚀 Features
-Swap Request Flow: Initiate item-for-item trades in seconds.
+A minimal, transparent swap system for ReWear – enabling peer-to-peer clothing exchanges with AI-powered item matching and trust-based transparency.
 
-AI Suggestions: Smart item recommendations from your own listings.
+---
 
-Preview Swap: See both items, point difference, and trust scores before confirming.
+## 🚀 Features
 
-Secure Acceptance: Addresses revealed only after both parties accept.
+- **Swap Request Flow** – Propose direct swaps between users.
+- **AI Suggestions** – Recommend best matching items from your closet.
+- **Swap Preview** – View both items, point difference, and user trust scores.
+- **Secure Acceptance** – Addresses shared only after mutual agreement.
+- **In-App Chat** – Negotiate swap terms in real-time.
+- **Shipping Tracker** – Upload tracking, confirm delivery.
+- **Karma & Points Update** – Automatically adjusts after successful swap.
+- **Swap History** – Timeline view of all actions for transparency.
 
-In-App Chat: Negotiate terms without leaving the page.
+---
 
-Shipping Tracker: Upload tracking info, mark delivery.
+## 🧩 Tech Stack
 
-Auto Karma & Points: System updates trust and balances after successful swaps.
+| Layer       | Tech                         |
+|-------------|------------------------------|
+| Frontend    | React, Tailwind CSS          |
+| Backend     | Node.js/Express or Flask     |
+| AI Matching | CLIP / ResNet for embeddings |
+| Database    | PostgreSQL                   |
+| Auth        | Auth0 / Firebase             |
+| Storage     | AWS S3 (images)              |
+| Realtime    | WebSockets (Pusher/socket.io)|
 
-Full Transparency: Swap history + live status updates.
+---
+
+## 🛠️ Getting Started
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/yourusername/rewear-swap-page.git
+   cd rewear-swap-page
